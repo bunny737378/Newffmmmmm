@@ -15,14 +15,18 @@ export BUILD_DIR_EXTERNAL=$BUILD_DIR/external
 function prepareOutput() {
   OUTPUT_LIB=${OUTPUT_DIR}/lib/${ANDROID_ABI}
   mkdir -p ${OUTPUT_LIB}
-  cp ${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/lib/*.so ${OUTPUT_LIB}
+  if [ -d "${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/lib" ]; then
+    cp -a ${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/lib/*.so ${OUTPUT_LIB} 2>/dev/null || true
+  fi
   if [ -d "${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/lib" ]; then
     cp -a ${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/lib/*.so ${OUTPUT_LIB} 2>/dev/null || true
   fi
 
   OUTPUT_HEADERS=${OUTPUT_DIR}/include/${ANDROID_ABI}
   mkdir -p ${OUTPUT_HEADERS}
-  cp -r ${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/include/* ${OUTPUT_HEADERS}
+  if [ -d "${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/include" ]; then
+    cp -r ${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/include/* ${OUTPUT_HEADERS} 2>/dev/null || true
+  fi
   if [ -d "${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/include" ]; then
     cp -r ${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/include/* ${OUTPUT_HEADERS} 2>/dev/null || true
   fi
@@ -45,28 +49,42 @@ function checkTextRelocations() {
   fi
 }
 
-rm -rf ${BUILD_DIR}
-rm -rf ${STATS_DIR}
-rm -rf ${OUTPUT_DIR}
-mkdir -p ${STATS_DIR}
-mkdir -p ${OUTPUT_DIR}
-
 source ${SCRIPTS_DIR}/export-host-variables.sh
 source ${SCRIPTS_DIR}/parse-arguments.sh
 
-BEFORE_FFMPEG=()
-HAS_MPV=false
-for lib in "${EXTERNAL_LIBRARIES[@]}"; do
-  if [ "$lib" == "mpv" ]; then
-    HAS_MPV=true
-  else
-    BEFORE_FFMPEG+=("$lib")
-  fi
-done
+if [ "$USE_PREBUILT_FFMPEG" = true ]; then
+  echo "==> Using prebuilt FFmpeg. Skipping FFmpeg compilation."
+  rm -rf ${BUILD_DIR_EXTERNAL}
+  rm -rf ${STATS_DIR}
+  rm -rf ${OUTPUT_DIR}
+else
+  rm -rf ${BUILD_DIR}
+  rm -rf ${STATS_DIR}
+  rm -rf ${OUTPUT_DIR}
+fi
+mkdir -p ${STATS_DIR}
+mkdir -p ${OUTPUT_DIR}
 
-COMPONENTS_TO_BUILD=("${BEFORE_FFMPEG[@]}" "ffmpeg")
-if [ "$HAS_MPV" = true ]; then
-  COMPONENTS_TO_BUILD+=("mpv")
+if [ "$USE_PREBUILT_FFMPEG" = true ]; then
+  COMPONENTS_TO_BUILD=()
+  for lib in "${EXTERNAL_LIBRARIES[@]}"; do
+    COMPONENTS_TO_BUILD+=("$lib")
+  done
+else
+  BEFORE_FFMPEG=()
+  HAS_MPV=false
+  for lib in "${EXTERNAL_LIBRARIES[@]}"; do
+    if [ "$lib" == "mpv" ]; then
+      HAS_MPV=true
+    else
+      BEFORE_FFMPEG+=("$lib")
+    fi
+  done
+
+  COMPONENTS_TO_BUILD=("${BEFORE_FFMPEG[@]}" "ffmpeg")
+  if [ "$HAS_MPV" = true ]; then
+    COMPONENTS_TO_BUILD+=("mpv")
+  fi
 fi
 
 for COMPONENT in ${COMPONENTS_TO_BUILD[@]}

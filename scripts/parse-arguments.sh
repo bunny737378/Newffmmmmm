@@ -9,6 +9,7 @@ FFMPEG_GPL_ENABLED=false
 ENABLE_MEDIACODEC=false
 BUILD_SINGLE_SO=false
 ULTIMATE_PROFILE=false
+USE_PREBUILT_FFMPEG=false
 
 SUPPORTED_LIBRARIES_FREE=(
   "libaom"
@@ -22,11 +23,9 @@ SUPPORTED_LIBRARIES_FREE=(
   "libfreetype"
   "libfribidi"
   "libass"
-  "libplacebo"
   "mbedtls"
   "libbluray"
   "libxml2"
-  "mpv"
 )
 
 SUPPORTED_LIBRARIES_GPL=(
@@ -142,6 +141,9 @@ for argument in "$@"; do
   --enable-libxml2 | -xml2)
     EXTERNAL_LIBRARIES+=("libxml2")
     ;;
+  --use-prebuilt-ffmpeg | --skip-ffmpeg)
+    USE_PREBUILT_FFMPEG=true
+    ;;
   --enable-libplacebo | -placebo)
     EXTERNAL_LIBRARIES+=("libplacebo")
     ;;
@@ -192,3 +194,4 @@ export BUILD_MX_SO=$BUILD_MX_SO
 export PACKAGE_AIO=$PACKAGE_AIO
 export ULTIMATE_PROFILE=$ULTIMATE_PROFILE
 export MX_PROFILE=$MX_PROFILE
+export USE_PREBUILT_FFMPEG=$USE_PREBUILT_FFMPEG

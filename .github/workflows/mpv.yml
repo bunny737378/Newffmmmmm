@@ -1,0 +1,151 @@
+name: mpv Android Compiler (libbase.so)
+
+on:
+  push:
+    paths:
+      - 'scripts/mpv/**'
+      - 'scripts/libplacebo/**'
+      - '.github/workflows/mpv.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mpv-android-release
+  cancel-in-progress: false
+
+jobs:
+  build-mpv:
+    name: Compile mpv (libbase.so) using Prebuilt FFmpeg
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y \
+            curl wget git python3 python3-pip python3-jinja2 python3-markupsafe zip unzip make cmake \
+            ninja-build nasm pkg-config yasm clang xz-utils
+          python3 -m pip install --upgrade meson jinja2 markupsafe
+
+      - name: Setup Android NDK
+        shell: bash
+        run: |
+          set -euo pipefail
+          wget -q https://dl.google.com/android/repository/android-ndk-r25c-linux.zip
+          sudo unzip -q android-ndk-r25c-linux.zip -d /opt/
+          echo "ANDROID_NDK_HOME=/opt/android-ndk-r25c" >> "$GITHUB_ENV"
+          echo "ANDROID_SDK_HOME=/opt/android-sdk" >> "$GITHUB_ENV"
+          sudo mkdir -p /opt/android-sdk
+
+      - name: Download Prebuilt FFmpeg Release
+        shell: bash
+        run: |
+          set -euo pipefail
+          FFMPEG_URL="https://github.com/bunny737378/NEWWFFMCREATEE/releases/download/ffmpeg-android-latest/ffmpeg.zip"
+          echo "Downloading prebuilt FFmpeg from $FFMPEG_URL..."
+          wget -q "$FFMPEG_URL" -O ffmpeg_prebuilt.zip
+          mkdir -p ffmpeg_unpacked
+          unzip -q ffmpeg_prebuilt.zip -d ffmpeg_unpacked
+          rm -f ffmpeg_prebuilt.zip
+
+          for ABI in arm64-v8a armeabi-v7a; do
+            mkdir -p "build/ffmpeg/$ABI/lib"
+            mkdir -p "build/ffmpeg/$ABI/include"
+            mkdir -p "build/ffmpeg/$ABI/bin"
+
+            if [ -d "ffmpeg_unpacked/lib/$ABI" ]; then
+              cp -a ffmpeg_unpacked/lib/$ABI/. "build/ffmpeg/$ABI/lib/"
+            fi
+            if [ -d "ffmpeg_unpacked/include/$ABI" ]; then
+              cp -a ffmpeg_unpacked/include/$ABI/. "build/ffmpeg/$ABI/include/"
+            fi
+            if [ -d "ffmpeg_unpacked/bin/$ABI" ]; then
+              cp -a ffmpeg_unpacked/bin/$ABI/. "build/ffmpeg/$ABI/bin/"
+            fi
+          done
+          rm -rf ffmpeg_unpacked
+          echo "Prebuilt FFmpeg installed into build/ffmpeg successfully!"
+
+      - name: Compile libplacebo & mpv (libbase.so)
+        shell: bash
+        env:
+          ANDROID_NDK_HOME: /opt/android-ndk-r25c
+          ANDROID_SDK_HOME: /opt/android-sdk
+        run: |
+          set -euo pipefail
+          chmod +x ffmpeg-android-maker.sh scripts/*.sh scripts/*/*.sh tools/*.sh
+          ./ffmpeg-android-maker.sh \
+            --use-prebuilt-ffmpeg \
+            --enable-mpv \
+            -abis=arm64-v8a,armeabi-v7a
+
+      - name: Package baselib.zip
+        shell: bash
+        run: |
+          set -euo pipefail
+          PACKAGE="baselib_package"
+          rm -rf "$PACKAGE" dist
+          mkdir -p dist "$PACKAGE"
+
+          for ABI in arm64-v8a armeabi-v7a; do
+            mkdir -p "$PACKAGE/lib/$ABI"
+            mkdir -p "$PACKAGE/include/$ABI"
+            mkdir -p "$PACKAGE/bin/$ABI"
+
+            if [ -d "output/lib/$ABI" ]; then
+              cp -a "output/lib/$ABI/." "$PACKAGE/lib/$ABI/"
+            fi
+
+            if [ -d "output/include/$ABI" ]; then
+              cp -a "output/include/$ABI/." "$PACKAGE/include/$ABI/"
+            fi
+
+            if [ -d "output/bin/$ABI" ]; then
+              cp -a "output/bin/$ABI/." "$PACKAGE/bin/$ABI/"
+            fi
+          done
+
+          cp README.md "$PACKAGE/README.md"
+
+          cd "$PACKAGE"
+          zip -qr ../dist/baselib.zip .
+          cd ..
+
+          echo "baselib.zip package ready:"
+          ls -lh dist/baselib.zip
+
+      - name: Publish GitHub Release for baselib
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          TAG="baselib-android-latest"
+
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release delete "$TAG" --repo "$GITHUB_REPOSITORY" --yes --cleanup-tag
+          fi
+
+          gh release create "$TAG" \
+            dist/baselib.zip \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "mpv Android (libbase.so) - Latest Build" \
+            --notes "### mpv Android Package (baselib.zip)
+
+          Fast standalone build of **\`libmpv.so\`** (exported as **\`libbase.so\`**) compiled against prebuilt FFmpeg and \`libplacebo\`.
+
+          #### Included in \`baselib.zip\`:
+          - **\`lib/\`**: Contains \`libbase.so\` (\`libmpv.so\`) and all required FFmpeg shared libraries for \`arm64-v8a\` and \`armeabi-v7a\`.
+          - **\`include/\`**: Complete mpv and FFmpeg header files for Android Studio NDK integration.
+          - **\`bin/\`**: Standalone executables.
+
+          **Commit:** $GITHUB_SHA
+          **Workflow Run:** $GITHUB_RUN_NUMBER" \
+            --latest
