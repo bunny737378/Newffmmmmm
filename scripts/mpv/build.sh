@@ -67,7 +67,24 @@ cd ${BUILD_DIRECTORY}
 ${NINJA_EXECUTABLE} -j ${HOST_NPROC}
 ${NINJA_EXECUTABLE} install
 
+mkdir -p "${INSTALL_DIR}/lib"
+
+MPV_SO_FOUND=""
 if [ -f "${INSTALL_DIR}/lib/libmpv.so" ]; then
-  cp -f "${INSTALL_DIR}/lib/libmpv.so" "${INSTALL_DIR}/lib/libbase.so"
-  echo "==> Successfully compiled mpv and created libbase.so for ${ANDROID_ABI}!"
+  MPV_SO_FOUND="${INSTALL_DIR}/lib/libmpv.so"
+elif [ -f "${INSTALL_DIR}/lib64/libmpv.so" ]; then
+  MPV_SO_FOUND="${INSTALL_DIR}/lib64/libmpv.so"
+elif [ -f "libmpv.so" ]; then
+  MPV_SO_FOUND="libmpv.so"
+else
+  MPV_SO_FOUND=$(find . "${INSTALL_DIR}" -name "libmpv.so*" 2>/dev/null | head -n 1)
+fi
+
+if [ -n "${MPV_SO_FOUND}" ]; then
+  cp -f "${MPV_SO_FOUND}" "${INSTALL_DIR}/lib/libmpv.so"
+  cp -f "${MPV_SO_FOUND}" "${INSTALL_DIR}/lib/libbase.so"
+  echo "==> Successfully compiled mpv and created libbase.so for ${ANDROID_ABI} from ${MPV_SO_FOUND}!"
+else
+  echo "ERROR: libmpv.so build failed or not found!"
+  exit 1
 fi

@@ -17,9 +17,17 @@ function prepareOutput() {
   mkdir -p ${OUTPUT_LIB}
   if [ -d "${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/lib" ]; then
     cp -a ${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/lib/*.so ${OUTPUT_LIB} 2>/dev/null || true
+    if [ -d "${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/lib/pkgconfig" ]; then
+      mkdir -p ${OUTPUT_LIB}/pkgconfig
+      cp -r ${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/lib/pkgconfig/* ${OUTPUT_LIB}/pkgconfig/ 2>/dev/null || true
+    fi
   fi
   if [ -d "${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/lib" ]; then
     cp -a ${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/lib/*.so ${OUTPUT_LIB} 2>/dev/null || true
+    if [ -d "${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/lib/pkgconfig" ]; then
+      mkdir -p ${OUTPUT_LIB}/pkgconfig
+      cp -r ${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/lib/pkgconfig/* ${OUTPUT_LIB}/pkgconfig/ 2>/dev/null || true
+    fi
   fi
 
   OUTPUT_HEADERS=${OUTPUT_DIR}/include/${ANDROID_ABI}
