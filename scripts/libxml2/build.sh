@@ -1,23 +1,25 @@
 #!/usr/bin/env bash
 
-./autogen.sh \
-    --prefix=${INSTALL_DIR} \
-    --host=${TARGET} \
-    --with-sysroot=${SYSROOT_PATH} \
-    --disable-shared \
-    --disable-fast-install \
-    --enable-static \
-    --with-zlib \
-    --with-pic \
-    --without-python \
-    --without-debug \
-    --without-lzma \
-    CC=${FAM_CC} \
-    AR=${FAM_AR} \
-    RANLIB=${FAM_RANLIB} || exit 1
+CMAKE_BUILD_DIR=xml2_build_${ANDROID_ABI}
+rm -rf ${CMAKE_BUILD_DIR}
+mkdir -p ${CMAKE_BUILD_DIR}
+cd ${CMAKE_BUILD_DIR}
 
-export FFMPEG_EXTRA_LD_FLAGS="${FFMPEG_EXTRA_LD_FLAGS} -lm -lz"
+${CMAKE_EXECUTABLE} .. \
+  -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK_HOME}/build/cmake/android.toolchain.cmake \
+  -DANDROID_ABI=${ANDROID_ABI} \
+  -DANDROID_PLATFORM=${DESIRED_ANDROID_API_LEVEL} \
+  -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR} \
+  -DBUILD_SHARED_LIBS=OFF \
+  -DLIBXML2_WITH_PYTHON=OFF \
+  -DLIBXML2_WITH_TESTS=OFF \
+  -DLIBXML2_WITH_PROGRAMS=OFF \
+  -DLIBXML2_WITH_ICONV=OFF \
+  -DLIBXML2_WITH_LZMA=OFF \
+  -DLIBXML2_WITH_ZLIB=OFF \
+  -DCMAKE_POSITION_INDEPENDENT_CODE=ON
 
-${MAKE_EXECUTABLE} clean
 ${MAKE_EXECUTABLE} -j${HOST_NPROC}
 ${MAKE_EXECUTABLE} install
+
+export FFMPEG_EXTRA_LD_FLAGS="${FFMPEG_EXTRA_LD_FLAGS} -lm -lz"

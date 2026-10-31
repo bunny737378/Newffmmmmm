@@ -1,7 +1,12 @@
-#!/usr/bin/env bash
+[ -z "${BASE_DIR}" ] && export BASE_DIR="/app/applet"
+[ -z "${BUILD_DIR_FFMPEG}" ] && export BUILD_DIR_FFMPEG="${BASE_DIR}/build/ffmpeg"
+[ -z "${BUILD_DIR_EXTERNAL}" ] && export BUILD_DIR_EXTERNAL="${BASE_DIR}/build/external"
+[ -z "${INSTALL_DIR}" ] && export INSTALL_DIR="${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}"
+
+FFMPEG_PREFIX="${BUILD_DIR_FFMPEG}/${ANDROID_ABI}"
+EXTERNAL_PREFIX="${INSTALL_DIR}"
 
 CROSS_FILE_NAME=crossfile-${ANDROID_ABI}.meson
-
 rm -f ${CROSS_FILE_NAME}
 
 cat > "${CROSS_FILE_NAME}" << EOF
@@ -21,18 +26,19 @@ cpu = '${TARGET_TRIPLE_MACHINE_ARCH}'
 endian = 'little'
 
 [built-in options]
-prefix = '${INSTALL_DIR}'
-c_args = ['-I${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/include', '-I${INSTALL_DIR}/include', '-fPIC']
-cpp_args = ['-I${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/include', '-I${INSTALL_DIR}/include', '-fPIC']
-c_link_args = ['-L${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/lib', '-L${INSTALL_DIR}/lib']
-cpp_link_args = ['-L${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/lib', '-L${INSTALL_DIR}/lib']
+prefix = '${EXTERNAL_PREFIX}'
+c_args = ['-I${FFMPEG_PREFIX}/include', '-I${EXTERNAL_PREFIX}/include', '-fPIC']
+cpp_args = ['-I${FFMPEG_PREFIX}/include', '-I${EXTERNAL_PREFIX}/include', '-fPIC']
+c_link_args = ['-L${FFMPEG_PREFIX}/lib', '-L${EXTERNAL_PREFIX}/lib']
+cpp_link_args = ['-L${FFMPEG_PREFIX}/lib', '-L${EXTERNAL_PREFIX}/lib']
+pkg_config_path = ['${FFMPEG_PREFIX}/lib/pkgconfig', '${EXTERNAL_PREFIX}/lib/pkgconfig']
 EOF
 
 BUILD_DIRECTORY=build/${ANDROID_ABI}
 rm -rf ${BUILD_DIRECTORY}
 
-export PKG_CONFIG_PATH="${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/lib/pkgconfig:${INSTALL_DIR}/lib/pkgconfig"
-export PKG_CONFIG_LIBDIR="${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/lib/pkgconfig:${INSTALL_DIR}/lib/pkgconfig"
+export PKG_CONFIG_PATH="${FFMPEG_PREFIX}/lib/pkgconfig:${EXTERNAL_PREFIX}/lib/pkgconfig"
+export PKG_CONFIG_LIBDIR="${FFMPEG_PREFIX}/lib/pkgconfig:${EXTERNAL_PREFIX}/lib/pkgconfig"
 
 unset CC CXX
 

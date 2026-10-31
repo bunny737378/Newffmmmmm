@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+if [[ -z "${BASE_DIR}" ]]; then
+  export BASE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+fi
+export BUILD_DIR=${BASE_DIR}/build
+export BUILD_DIR_FFMPEG=${BUILD_DIR}/ffmpeg
+export BUILD_DIR_EXTERNAL=${BUILD_DIR}/external
+
 if [[ -z "${ANDROID_SDK_HOME}" ]]; then
   if [[ -n "${ANDROID_SDK_ROOT}" ]]; then
     export ANDROID_SDK_HOME="${ANDROID_SDK_ROOT}"

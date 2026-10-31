@@ -41,7 +41,9 @@ fi
 ADDITIONAL_COMPONENTS=
 for LIBRARY_NAME in ${FFMPEG_EXTERNAL_LIBRARIES[@]}
 do
-  ADDITIONAL_COMPONENTS+=" --enable-$LIBRARY_NAME"
+  if [ "$LIBRARY_NAME" != "mpv" ] && [ "$LIBRARY_NAME" != "libplacebo" ]; then
+    ADDITIONAL_COMPONENTS+=" --enable-$LIBRARY_NAME"
+  fi
 done
 
 DEP_CFLAGS="-I${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/include"
