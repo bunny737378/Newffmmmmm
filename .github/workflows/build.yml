@@ -29,8 +29,9 @@ jobs:
           set -euo pipefail
           sudo apt-get update
           sudo apt-get install -y \
-            curl wget git python3 zip unzip make cmake \
-            ninja-build meson nasm pkg-config yasm clang xz-utils
+            curl wget git python3 python3-pip python3-jinja2 python3-markupsafe zip unzip make cmake \
+            ninja-build nasm pkg-config yasm clang xz-utils
+          pip3 install --break-system-packages --upgrade meson jinja2 markupsafe
 
       - name: Setup Android NDK
         shell: bash
