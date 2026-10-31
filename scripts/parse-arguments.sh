@@ -23,9 +23,11 @@ SUPPORTED_LIBRARIES_FREE=(
   "libfreetype"
   "libfribidi"
   "libass"
+  "libplacebo"
   "mbedtls"
   "libbluray"
   "libxml2"
+  "mpv"
 )
 
 SUPPORTED_LIBRARIES_GPL=(
