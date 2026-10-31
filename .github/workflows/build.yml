@@ -1,0 +1,131 @@
+name: FFmpeg Ultimate Android Compiler
+
+on:
+  push:
+    branches:
+      - master
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ffmpeg-android-release
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Compile and Publish Universal FFmpeg Android
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y \
+            curl wget git python3 zip unzip make cmake \
+            ninja-build meson nasm pkg-config yasm clang xz-utils
+
+      - name: Setup Android NDK
+        shell: bash
+        run: |
+          set -euo pipefail
+          wget -q https://dl.google.com/android/repository/android-ndk-r25c-linux.zip
+          sudo unzip -q android-ndk-r25c-linux.zip -d /opt/
+          echo "ANDROID_NDK_HOME=/opt/android-ndk-r25c" >> "$GITHUB_ENV"
+          echo "ANDROID_SDK_HOME=/opt/android-sdk" >> "$GITHUB_ENV"
+          sudo mkdir -p /opt/android-sdk
+
+      - name: Compile FFmpeg
+        shell: bash
+        env:
+          ANDROID_NDK_HOME: /opt/android-ndk-r25c
+          ANDROID_SDK_HOME: /opt/android-sdk
+        run: |
+          set -euo pipefail
+          chmod +x ffmpeg-android-maker.sh scripts/*.sh scripts/*/*.sh tools/*.sh
+          ./ffmpeg-android-maker.sh \
+            --profile=ultimate \
+            -abis=arm64-v8a,armeabi-v7a
+
+      - name: Package Universal FFmpeg for Android Apps
+        shell: bash
+        run: |
+          set -euo pipefail
+          PACKAGE="ffmpeg_package"
+          rm -rf "$PACKAGE" dist
+          mkdir -p dist "$PACKAGE"
+
+          for ABI in arm64-v8a armeabi-v7a; do
+            mkdir -p "$PACKAGE/lib/$ABI"
+            mkdir -p "$PACKAGE/include/$ABI"
+            mkdir -p "$PACKAGE/bin/$ABI"
+
+            if [ -d "output/lib/$ABI" ]; then
+              cp -a "output/lib/$ABI/." "$PACKAGE/lib/$ABI/"
+            fi
+
+            if [ -d "output/include/$ABI" ]; then
+              cp -a "output/include/$ABI/." "$PACKAGE/include/$ABI/"
+            fi
+
+            BINARY="output/bin/$ABI/ffmpeg"
+            if [ -f "$BINARY" ]; then
+              install -m 755 "$BINARY" "$PACKAGE/bin/$ABI/ffmpeg"
+            fi
+            PROBE_BIN="output/bin/$ABI/ffprobe"
+            if [ -f "$PROBE_BIN" ]; then
+              install -m 755 "$PROBE_BIN" "$PACKAGE/bin/$ABI/ffprobe"
+            fi
+          done
+
+          cp README.md "$PACKAGE/README.md"
+
+          cd "$PACKAGE"
+          zip -qr ../dist/ffmpeg.zip .
+          cd ..
+
+          echo "Universal FFmpeg package ready for publishing:"
+          ls -lh dist/ffmpeg.zip
+
+      - name: Publish GitHub Release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          TAG="ffmpeg-android-latest"
+
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release delete "$TAG" --repo "$GITHUB_REPOSITORY" --yes --cleanup-tag
+          fi
+
+          gh release create "$TAG" \
+            dist/ffmpeg.zip \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "FFmpeg Android Ultimate - Latest Build" \
+            --notes "### FFmpeg Android (Ultimate Universal Edition)
+
+          Universal high-performance modular FFmpeg Android libraries ready for use in **any** Android app, custom media player, ExoPlayer, NDK, video editor, or CLI!
+
+          #### Included in \`ffmpeg.zip\`:
+          - **\`lib/\`**: Modular shared libraries (\`libavcodec.so\`, \`libavformat.so\`, \`libavutil.so\`, \`libswresample.so\`, \`libswscale.so\`, \`libavfilter.so\`, \`libavdevice.so\`, \`libbase.so\`) for \`arm64-v8a\` and \`armeabi-v7a\`.
+          - **\`include/\`**: Complete C/C++ header files for Android Studio NDK / CMake integration.
+          - **\`bin/\`**: Native Android standalone executables (\`ffmpeg\` and \`ffprobe\`).
+
+          #### Comprehensive Codec Capabilities:
+          - **Audio:** Dolby Digital (AC3), Dolby Digital Plus / Atmos (EAC3), Dolby TrueHD, MLP, DTS / DTS-HD Master Audio (DCA), AAC, Opus, MP3, FLAC, ALAC, APE (Monkey's Audio), WavPack, WMA (v1, v2, Pro, Lossless, Voice), AMR-NB/WB, RealAudio Cook, ATRAC1/3/3+/9, DSD, TAK, Shorten, Musepack, ADPCM.
+          - **Video:** HEVC / H.265 (Main10 10-bit HDR), H.264 (Hi10P), AV1 (via \`libdav1d\`), VP9 (HDR Profile 2), VP8, MPEG-4 (DivX/XviD), MPEG-1/2, VC-1, RealVideo (RV10-RV40), Apple ProRes, Theora, Bink, Cinepak, Indeo.
+          - **Hardware Acceleration:** Android MediaCodec HW Decoders enabled for H264, HEVC, MPEG4, VP8, VP9, AV1.
+          - **Subtitles:** Advanced SubStation Alpha (\`libass\` + \`libfreetype\` + \`libfribidi\`), SubRip (.srt), WebVTT, HDMV PGS, DVD VobSub, DVB, Teletext.
+          - **Filters & Deinterlacing:** YADIF, W3FDIF, BWDIF, transpose, rotate, vflip, hflip, scale, loudnorm, volume, aresample.
+
+          **Commit:** $GITHUB_SHA
+          **Workflow Run:** $GITHUB_RUN_NUMBER" \
+            --latest

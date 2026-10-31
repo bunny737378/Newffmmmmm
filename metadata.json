@@ -1,0 +1,6 @@
+{
+  "name": "FFmpeg Maker",
+  "description": "Android FFmpeg builder, custom codec configuration studio, script generator, and media toolkit.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
