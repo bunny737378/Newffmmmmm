@@ -13,13 +13,13 @@ if [ "$FFMPEG_GPL_ENABLED" = true ] ; then
     EXTRA_BUILD_CONFIGURATION_FLAGS="$EXTRA_BUILD_CONFIGURATION_FLAGS --enable-gpl --enable-version3"
 fi
 
-if [ "$ENABLE_MEDIACODEC" = true ] || [ "$ULTIMATE_PROFILE" = true ] || [ "$MX_PROFILE" = true ]; then
+if [ "$ENABLE_MEDIACODEC" = true ] || [ "$ULTIMATE_PROFILE" = true ] || [ "$SNORA_PROFILE" = true ]; then
   EXTRA_BUILD_CONFIGURATION_FLAGS="$EXTRA_BUILD_CONFIGURATION_FLAGS --enable-jni --enable-mediacodec"
   EXTRA_BUILD_CONFIGURATION_FLAGS="$EXTRA_BUILD_CONFIGURATION_FLAGS --enable-decoder=h264_mediacodec --enable-decoder=hevc_mediacodec --enable-decoder=mpeg4_mediacodec --enable-decoder=vp8_mediacodec --enable-decoder=vp9_mediacodec --enable-decoder=av1_mediacodec"
   EXTRA_BUILD_CONFIGURATION_FLAGS="$EXTRA_BUILD_CONFIGURATION_FLAGS --enable-hwaccel=h264_mediacodec --enable-hwaccel=hevc_mediacodec --enable-hwaccel=mpeg4_mediacodec --enable-hwaccel=vp8_mediacodec --enable-hwaccel=vp9_mediacodec --enable-hwaccel=av1_mediacodec"
 fi
 
-if [ "$ULTIMATE_PROFILE" = true ] || [ "$MX_PROFILE" = true ]; then
+if [ "$ULTIMATE_PROFILE" = true ] || [ "$SNORA_PROFILE" = true ]; then
   ALL_AUDIO_DECODERS="--enable-decoder=ac3,ac3_fixed,eac3,truehd,mlp,dca,aac,aac_latm,aac_fixed,opus,vorbis,flac,alac,ape,wavpack,wma,wmav1,wmav2,wmapro,wmalossless,wma_voice,amrnb,amrwb,cook,ra_144,ra_288,atrac1,atrac3,atrac3plus,atrac9,dsd_lsbf,dsd_msbf,dsd_lsbf_planar,dsd_msbf_planar,mp3,mp3float,mp3on4,tak,shorten,mpc7,mpc8,binkaudio_rdft,binkaudio_dct,truespeech,twinvq,pcm_s16le,pcm_s24le,pcm_s32le,pcm_f32le,pcm_bluray,pcm_dvd,adpcm_ima_wav,adpcm_ms,adpcm_ea,adpcm_adx"
   ALL_AUDIO_PARSERS="--enable-parser=ac3,eac3,dca,mlp,aac,flac,opus,vorbis,mpegaudio,cook,tak"
   ALL_AUDIO_DEMUXERS="--enable-demuxer=ac3,eac3,dts,dtshd,truehd,mlp,aac,flac,ogg,wav,ape,wv,amr,rm,mpc,mpc8,tak,shn"
@@ -41,7 +41,7 @@ fi
 ADDITIONAL_COMPONENTS=
 for LIBRARY_NAME in ${FFMPEG_EXTERNAL_LIBRARIES[@]}
 do
-  if [ "$LIBRARY_NAME" != "mpv" ] && [ "$LIBRARY_NAME" != "libplacebo" ]; then
+  if [ "$LIBRARY_NAME" != "snora" ] && [ "$LIBRARY_NAME" != "libplacebo" ]; then
     ADDITIONAL_COMPONENTS+=" --enable-$LIBRARY_NAME"
   fi
 done
@@ -79,4 +79,3 @@ STATIC_SHARED_FLAGS="--enable-shared --disable-static"
 ${MAKE_EXECUTABLE} clean
 ${MAKE_EXECUTABLE} -j${HOST_NPROC}
 ${MAKE_EXECUTABLE} install
-

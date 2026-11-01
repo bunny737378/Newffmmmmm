@@ -8,7 +8,9 @@ EXTERNAL_LIBRARIES=()
 FFMPEG_GPL_ENABLED=false
 ENABLE_MEDIACODEC=false
 BUILD_SINGLE_SO=false
+BUILD_SNORA_SO=false
 ULTIMATE_PROFILE=false
+SNORA_PROFILE=false
 USE_PREBUILT_FFMPEG=false
 
 SUPPORTED_LIBRARIES_FREE=(
@@ -27,7 +29,7 @@ SUPPORTED_LIBRARIES_FREE=(
   "mbedtls"
   "libbluray"
   "libxml2"
-  "mpv"
+  "snora"
 )
 
 SUPPORTED_LIBRARIES_GPL=(
@@ -37,8 +39,9 @@ SUPPORTED_LIBRARIES_GPL=(
 
 for argument in "$@"; do
   case $argument in
-  --profile=ultimate | --profile=full | --ultimate | -u | --all-codecs | --profile=mxplayer | --mxplayer | -mx)
+  --profile=ultimate | --profile=full | --ultimate | -u | --all-codecs | --profile=snora | --snora)
     ULTIMATE_PROFILE=true
+    SNORA_PROFILE=true
     ENABLE_MEDIACODEC=true
     FFMPEG_GPL_ENABLED=true
     EXTERNAL_LIBRARIES+=("${SUPPORTED_LIBRARIES_FREE[@]}")
@@ -89,9 +92,9 @@ for argument in "$@"; do
   --build-single-so | -single-so)
     BUILD_SINGLE_SO=true
     ;;
-  --build-mx-so | -mx-so)
+  --build-snora-so | -snora-so)
     BUILD_SINGLE_SO=true
-    BUILD_MX_SO=true
+    BUILD_SNORA_SO=true
     ;;
   --package-aio | -aio)
     PACKAGE_AIO=true
@@ -149,12 +152,12 @@ for argument in "$@"; do
   --enable-libplacebo | -placebo)
     EXTERNAL_LIBRARIES+=("libplacebo")
     ;;
-  --enable-mpv | -mpv)
+  --enable-snora | -snora)
     [[ ! " ${EXTERNAL_LIBRARIES[@]} " =~ " libfreetype " ]] && EXTERNAL_LIBRARIES+=("libfreetype")
     [[ ! " ${EXTERNAL_LIBRARIES[@]} " =~ " libfribidi " ]] && EXTERNAL_LIBRARIES+=("libfribidi")
     [[ ! " ${EXTERNAL_LIBRARIES[@]} " =~ " libass " ]] && EXTERNAL_LIBRARIES+=("libass")
     [[ ! " ${EXTERNAL_LIBRARIES[@]} " =~ " libplacebo " ]] && EXTERNAL_LIBRARIES+=("libplacebo")
-    EXTERNAL_LIBRARIES+=("mpv")
+    EXTERNAL_LIBRARIES+=("snora")
     ;;
   --enable-all-free | -all-free)
     EXTERNAL_LIBRARIES+=("${SUPPORTED_LIBRARIES_FREE[@]}")
@@ -192,8 +195,8 @@ export DESIRED_ANDROID_API_LEVEL=${API_LEVEL}
 export FFMPEG_GPL_ENABLED=$FFMPEG_GPL_ENABLED
 export ENABLE_MEDIACODEC=$ENABLE_MEDIACODEC
 export BUILD_SINGLE_SO=$BUILD_SINGLE_SO
-export BUILD_MX_SO=$BUILD_MX_SO
+export BUILD_SNORA_SO=$BUILD_SNORA_SO
 export PACKAGE_AIO=$PACKAGE_AIO
 export ULTIMATE_PROFILE=$ULTIMATE_PROFILE
-export MX_PROFILE=$MX_PROFILE
+export SNORA_PROFILE=$SNORA_PROFILE
 export USE_PREBUILT_FFMPEG=$USE_PREBUILT_FFMPEG

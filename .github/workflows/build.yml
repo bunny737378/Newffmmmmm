@@ -70,10 +70,17 @@ jobs:
 
             if [ -d "output/lib/$ABI" ]; then
               cp -a "output/lib/$ABI/." "$PACKAGE/lib/$ABI/"
+              rm -rf "$PACKAGE/lib/$ABI/pkgconfig"
+              find "$PACKAGE/lib/$ABI" -maxdepth 1 -name "*.so" ! -name "libsnora.so" ! -name "libplacebo.so" ! -name "libav*.so" ! -name "libsw*.so" -delete 2>/dev/null || true
             fi
 
             if [ -d "output/include/$ABI" ]; then
               cp -a "output/include/$ABI/." "$PACKAGE/include/$ABI/"
+              if [ -d "$PACKAGE/include/$ABI/mpv" ]; then
+                mkdir -p "$PACKAGE/include/$ABI/snora"
+                cp -r "$PACKAGE/include/$ABI/mpv/." "$PACKAGE/include/$ABI/snora/"
+                rm -rf "$PACKAGE/include/$ABI/mpv"
+              fi
             fi
 
             BINARY="output/bin/$ABI/ffmpeg"
@@ -113,10 +120,10 @@ jobs:
             --title "FFmpeg Android Ultimate - Latest Build" \
             --notes "### FFmpeg Android (Ultimate Universal Edition)
 
-          Universal high-performance modular FFmpeg Android libraries ready for use in **any** Android app, custom media player, ExoPlayer, NDK, video editor, or CLI!
+          Universal high-performance modular FFmpeg Android libraries with Snora Native Media Engine, ready for use in any Android app, custom media player, ExoPlayer, NDK, video editor, or CLI!
 
           #### Included in \`ffmpeg.zip\`:
-          - **\`lib/\`**: Modular shared libraries (\`libavcodec.so\`, \`libavformat.so\`, \`libavutil.so\`, \`libswresample.so\`, \`libswscale.so\`, \`libavfilter.so\`, \`libavdevice.so\`, \`libbase.so\`) for \`arm64-v8a\` and \`armeabi-v7a\`.
+          - **\`lib/\`**: Modular shared libraries (\`libavcodec.so\`, \`libavformat.so\`, \`libavutil.so\`, \`libswresample.so\`, \`libswscale.so\`, \`libavfilter.so\`, \`libavdevice.so\`, \`libsnora.so\`, \`libplacebo.so\`) for \`arm64-v8a\` and \`armeabi-v7a\`.
           - **\`include/\`**: Complete C/C++ header files for Android Studio NDK / CMake integration.
           - **\`bin/\`**: Native Android standalone executables (\`ffmpeg\` and \`ffprobe\`).
 

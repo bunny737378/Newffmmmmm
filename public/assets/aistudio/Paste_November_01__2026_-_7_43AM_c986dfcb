@@ -1,0 +1,1135 @@
+hmm so ye h abhi ffmpeg zip ka tree structure
+
+ffmpeg/
+├── README.md
+├── bin
+│   ├── arm64-v8a
+│   │   ├── ffmpeg
+│   │   └── ffprobe
+│   └── armeabi-v7a
+│       ├── ffmpeg
+│       └── ffprobe
+├── include
+│   ├── arm64-v8a
+│   │   ├── aom
+│   │   │   ├── aom.h
+│   │   │   ├── aom_codec.h
+│   │   │   ├── aom_decoder.h
+│   │   │   ├── aom_encoder.h
+│   │   │   ├── aom_ext_ratectrl.h                                               │   │   │   ├── aom_external_partition.h
+│   │   │   ├── aom_frame_buffer.h                                               │   │   │   ├── aom_image.h
+│   │   │   ├── aom_integer.h                                                    │   │   │   ├── aom_tpl.h
+│   │   │   ├── aomcx.h
+│   │   │   └── aomdx.h
+│   │   ├── ass
+│   │   │   ├── ass.h
+│   │   │   └── ass_types.h
+│   │   ├── dav1d
+│   │   │   ├── common.h
+│   │   │   ├── data.h
+│   │   │   ├── dav1d.h
+│   │   │   ├── headers.h
+│   │   │   ├── picture.h
+│   │   │   └── version.h
+│   │   ├── everest
+│   │   │   ├── Hacl_Curve25519.h                                                │   │   │   ├── everest.h
+│   │   │   ├── kremlib
+│   │   │   │   ├── FStar_UInt128.h
+│   │   │   │   └── FStar_UInt64_FStar_UInt32_FStar_UInt16_FStar_UInt8.h
+│   │   │   ├── kremlib.h
+│   │   │   ├── kremlin
+│   │   │   │   ├── c_endianness.h
+│   │   │   │   └── internal
+│   │   │   │       ├── builtin.h
+│   │   │   │       ├── callconv.h
+│   │   │   │       ├── compat.h
+│   │   │   │       ├── debug.h
+│   │   │   │       ├── target.h
+│   │   │   │       ├── types.h
+│   │   │   │       └── wasmsupport.h
+│   │   │   ├── vs2013
+│   │   │   │   └── Hacl_Curve25519.h
+│   │   │   └── x25519.h
+│   │   ├── freetype2
+│   │   │   ├── freetype
+│   │   │   │   ├── config
+│   │   │   │   │   ├── ftconfig.h
+│   │   │   │   │   ├── ftheader.h
+│   │   │   │   │   ├── ftmodule.h
+│   │   │   │   │   ├── ftoption.h
+│   │   │   │   │   ├── ftstdlib.h
+│   │   │   │   │   ├── integer-types.h
+│   │   │   │   │   ├── mac-support.h
+│   │   │   │   │   └── public-macros.h
+│   │   │   │   ├── freetype.h
+│   │   │   │   ├── ftadvanc.h
+│   │   │   │   ├── ftbbox.h
+│   │   │   │   ├── ftbdf.h
+│   │   │   │   ├── ftbitmap.h
+│   │   │   │   ├── ftbzip2.h
+│   │   │   │   ├── ftcache.h
+│   │   │   │   ├── ftchapters.h
+│   │   │   │   ├── ftcid.h
+│   │   │   │   ├── ftcolor.h
+│   │   │   │   ├── ftdriver.h
+│   │   │   │   ├── fterrdef.h
+│   │   │   │   ├── fterrors.h
+│   │   │   │   ├── ftfntfmt.h
+│   │   │   │   ├── ftgasp.h
+│   │   │   │   ├── ftglyph.h
+│   │   │   │   ├── ftgxval.h
+│   │   │   │   ├── ftgzip.h
+│   │   │   │   ├── ftimage.h
+│   │   │   │   ├── ftincrem.h
+│   │   │   │   ├── ftlcdfil.h
+│   │   │   │   ├── ftlist.h
+│   │   │   │   ├── ftlogging.h
+│   │   │   │   ├── ftlzw.h
+│   │   │   │   ├── ftmac.h
+│   │   │   │   ├── ftmm.h
+│   │   │   │   ├── ftmodapi.h
+│   │   │   │   ├── ftmoderr.h
+│   │   │   │   ├── ftotval.h
+│   │   │   │   ├── ftoutln.h
+│   │   │   │   ├── ftparams.h
+│   │   │   │   ├── ftpfr.h
+│   │   │   │   ├── ftrender.h
+│   │   │   │   ├── ftsizes.h
+│   │   │   │   ├── ftsnames.h
+│   │   │   │   ├── ftstroke.h
+│   │   │   │   ├── ftsynth.h
+│   │   │   │   ├── ftsystem.h
+│   │   │   │   ├── fttrigon.h
+│   │   │   │   ├── fttypes.h
+│   │   │   │   ├── ftwinfnt.h
+│   │   │   │   ├── otsvg.h
+│   │   │   │   ├── t1tables.h
+│   │   │   │   ├── ttnameid.h
+│   │   │   │   ├── tttables.h
+│   │   │   │   └── tttags.h
+│   │   │   └── ft2build.h
+│   │   ├── fribidi
+│   │   │   ├── fribidi-arabic.h
+│   │   │   ├── fribidi-begindecls.h
+│   │   │   ├── fribidi-bidi-types-list.h
+│   │   │   ├── fribidi-bidi-types.h
+│   │   │   ├── fribidi-bidi.h
+│   │   │   ├── fribidi-brackets.h
+│   │   │   ├── fribidi-char-sets-list.h
+│   │   │   ├── fribidi-char-sets.h
+│   │   │   ├── fribidi-common.h
+│   │   │   ├── fribidi-config.h
+│   │   │   ├── fribidi-deprecated.h
+│   │   │   ├── fribidi-enddecls.h
+│   │   │   ├── fribidi-flags.h
+│   │   │   ├── fribidi-joining-types-list.h
+│   │   │   ├── fribidi-joining-types.h
+│   │   │   ├── fribidi-joining.h
+│   │   │   ├── fribidi-mirroring.h
+│   │   │   ├── fribidi-shape.h
+│   │   │   ├── fribidi-types.h
+│   │   │   ├── fribidi-unicode-version.h
+│   │   │   ├── fribidi-unicode.h
+│   │   │   └── fribidi.h
+│   │   ├── lame
+│   │   │   └── lame.h
+│   │   ├── libavcodec
+│   │   │   ├── ac3_parser.h
+│   │   │   ├── adts_parser.h
+│   │   │   ├── avcodec.h
+│   │   │   ├── avdct.h
+│   │   │   ├── bsf.h
+│   │   │   ├── codec.h
+│   │   │   ├── codec_desc.h
+│   │   │   ├── codec_id.h
+│   │   │   ├── codec_par.h
+│   │   │   ├── d3d11va.h
+│   │   │   ├── defs.h
+│   │   │   ├── dirac.h
+│   │   │   ├── dv_profile.h
+│   │   │   ├── dxva2.h
+│   │   │   ├── exif.h
+│   │   │   ├── jni.h
+│   │   │   ├── mediacodec.h
+│   │   │   ├── packet.h
+│   │   │   ├── qsv.h
+│   │   │   ├── smpte_436m.h
+│   │   │   ├── vdpau.h
+│   │   │   ├── version.h
+│   │   │   ├── version_major.h
+│   │   │   ├── videotoolbox.h
+│   │   │   └── vorbis_parser.h
+│   │   ├── libavdevice
+│   │   │   ├── avdevice.h
+│   │   │   ├── version.h
+│   │   │   └── version_major.h
+│   │   ├── libavfilter
+│   │   │   ├── avfilter.h
+│   │   │   ├── buffersink.h
+│   │   │   ├── buffersrc.h
+│   │   │   ├── version.h
+│   │   │   └── version_major.h
+│   │   ├── libavformat
+│   │   │   ├── avformat.h
+│   │   │   ├── avio.h
+│   │   │   ├── version.h
+│   │   │   └── version_major.h
+│   │   ├── libavutil
+│   │   │   ├── adler32.h
+│   │   │   ├── aes.h
+│   │   │   ├── aes_ctr.h
+│   │   │   ├── ambient_viewing_environment.h
+│   │   │   ├── attributes.h
+│   │   │   ├── audio_fifo.h
+│   │   │   ├── avassert.h
+│   │   │   ├── avconfig.h
+│   │   │   ├── avstring.h
+│   │   │   ├── avutil.h
+│   │   │   ├── base64.h
+│   │   │   ├── blowfish.h
+│   │   │   ├── bprint.h
+│   │   │   ├── bswap.h
+│   │   │   ├── buffer.h
+│   │   │   ├── camellia.h
+│   │   │   ├── cast5.h
+│   │   │   ├── channel_layout.h
+│   │   │   ├── common.h
+│   │   │   ├── container_fifo.h
+│   │   │   ├── cpu.h
+│   │   │   ├── crc.h
+│   │   │   ├── csp.h
+│   │   │   ├── des.h
+│   │   │   ├── detection_bbox.h
+│   │   │   ├── dict.h
+│   │   │   ├── display.h
+│   │   │   ├── dovi_meta.h
+│   │   │   ├── downmix_info.h
+│   │   │   ├── encryption_info.h
+│   │   │   ├── error.h
+│   │   │   ├── eval.h
+│   │   │   ├── executor.h
+│   │   │   ├── ffversion.h
+│   │   │   ├── fifo.h
+│   │   │   ├── file.h
+│   │   │   ├── film_grain_params.h
+│   │   │   ├── frame.h
+│   │   │   ├── hash.h
+│   │   │   ├── hdr_dynamic_metadata.h
+│   │   │   ├── hdr_dynamic_vivid_metadata.h
+│   │   │   ├── hmac.h
+│   │   │   ├── hwcontext.h
+│   │   │   ├── hwcontext_amf.h
+│   │   │   ├── hwcontext_cuda.h
+│   │   │   ├── hwcontext_d3d11va.h
+│   │   │   ├── hwcontext_d3d12va.h
+│   │   │   ├── hwcontext_drm.h
+│   │   │   ├── hwcontext_dxva2.h
+│   │   │   ├── hwcontext_mediacodec.h
+│   │   │   ├── hwcontext_oh.h
+│   │   │   ├── hwcontext_opencl.h
+│   │   │   ├── hwcontext_qsv.h
+│   │   │   ├── hwcontext_vaapi.h
+│   │   │   ├── hwcontext_vdpau.h
+│   │   │   ├── hwcontext_videotoolbox.h
+│   │   │   ├── hwcontext_vulkan.h
+│   │   │   ├── iamf.h
+│   │   │   ├── imgutils.h
+│   │   │   ├── intfloat.h
+│   │   │   ├── intreadwrite.h
+│   │   │   ├── lfg.h
+│   │   │   ├── log.h
+│   │   │   ├── lzo.h
+│   │   │   ├── macros.h
+│   │   │   ├── mastering_display_metadata.h
+│   │   │   ├── mathematics.h
+│   │   │   ├── md5.h
+│   │   │   ├── mem.h
+│   │   │   ├── motion_vector.h
+│   │   │   ├── murmur3.h
+│   │   │   ├── opt.h
+│   │   │   ├── parseutils.h
+│   │   │   ├── pixdesc.h
+│   │   │   ├── pixelutils.h
+│   │   │   ├── pixfmt.h
+│   │   │   ├── random_seed.h
+│   │   │   ├── rational.h
+│   │   │   ├── rc4.h
+│   │   │   ├── refstruct.h
+│   │   │   ├── replaygain.h
+│   │   │   ├── ripemd.h
+│   │   │   ├── samplefmt.h
+│   │   │   ├── sha.h
+│   │   │   ├── sha512.h
+│   │   │   ├── spherical.h
+│   │   │   ├── stereo3d.h
+│   │   │   ├── tdrdi.h
+│   │   │   ├── tea.h
+│   │   │   ├── threadmessage.h
+│   │   │   ├── time.h
+│   │   │   ├── timecode.h
+│   │   │   ├── timestamp.h
+│   │   │   ├── tree.h
+│   │   │   ├── twofish.h
+│   │   │   ├── tx.h
+│   │   │   ├── uuid.h
+│   │   │   ├── version.h
+│   │   │   ├── video_enc_params.h
+│   │   │   ├── video_hint.h
+│   │   │   └── xtea.h
+│   │   ├── libbluray
+│   │   │   ├── bluray-version.h
+│   │   │   ├── bluray.h
+│   │   │   ├── clpi_data.h
+│   │   │   ├── filesystem.h
+│   │   │   ├── keys.h
+│   │   │   ├── log_control.h
+│   │   │   ├── meta_data.h
+│   │   │   ├── overlay.h
+│   │   │   └── player_settings.h
+│   │   ├── libplacebo
+│   │   │   ├── cache.h
+│   │   │   ├── colorspace.h
+│   │   │   ├── common.h
+│   │   │   ├── config.h
+│   │   │   ├── d3d11.h
+│   │   │   ├── dispatch.h
+│   │   │   ├── dither.h
+│   │   │   ├── dummy.h
+│   │   │   ├── filters.h
+│   │   │   ├── gamut_mapping.h
+│   │   │   ├── gpu.h
+│   │   │   ├── log.h
+│   │   │   ├── opengl.h
+│   │   │   ├── options.h
+│   │   │   ├── renderer.h
+│   │   │   ├── shaders
+│   │   │   │   ├── colorspace.h
+│   │   │   │   ├── custom.h
+│   │   │   │   ├── deinterlacing.h
+│   │   │   │   ├── dithering.h
+│   │   │   │   ├── film_grain.h
+│   │   │   │   ├── icc.h
+│   │   │   │   ├── lut.h
+│   │   │   │   └── sampling.h
+│   │   │   ├── shaders.h
+│   │   │   ├── swapchain.h
+│   │   │   ├── tone_mapping.h
+│   │   │   ├── utils
+│   │   │   │   ├── dav1d.h
+│   │   │   │   ├── dav1d_internal.h
+│   │   │   │   ├── dolbyvision.h
+│   │   │   │   ├── frame_queue.h
+│   │   │   │   ├── libav.h
+│   │   │   │   ├── libav_internal.h
+│   │   │   │   └── upload.h
+│   │   │   └── vulkan.h
+│   │   ├── libswresample
+│   │   │   ├── swresample.h
+│   │   │   ├── version.h
+│   │   │   └── version_major.h
+│   │   ├── libswscale
+│   │   │   ├── swscale.h
+│   │   │   ├── version.h
+│   │   │   └── version_major.h
+│   │   ├── libxml2
+│   │   │   └── libxml
+│   │   │       ├── HTMLparser.h
+│   │   │       ├── HTMLtree.h
+│   │   │       ├── SAX.h
+│   │   │       ├── SAX2.h
+│   │   │       ├── c14n.h
+│   │   │       ├── catalog.h
+│   │   │       ├── chvalid.h
+│   │   │       ├── debugXML.h
+│   │   │       ├── dict.h
+│   │   │       ├── encoding.h
+│   │   │       ├── entities.h
+│   │   │       ├── globals.h
+│   │   │       ├── hash.h
+│   │   │       ├── list.h
+│   │   │       ├── nanoftp.h
+│   │   │       ├── nanohttp.h
+│   │   │       ├── parser.h
+│   │   │       ├── parserInternals.h
+│   │   │       ├── pattern.h
+│   │   │       ├── relaxng.h
+│   │   │       ├── schemasInternals.h
+│   │   │       ├── schematron.h
+│   │   │       ├── threads.h
+│   │   │       ├── tree.h
+│   │   │       ├── uri.h
+│   │   │       ├── valid.h
+│   │   │       ├── xinclude.h
+│   │   │       ├── xlink.h
+│   │   │       ├── xmlIO.h
+│   │   │       ├── xmlautomata.h
+│   │   │       ├── xmlerror.h
+│   │   │       ├── xmlexports.h
+│   │   │       ├── xmlmemory.h
+│   │   │       ├── xmlmodule.h
+│   │   │       ├── xmlreader.h
+│   │   │       ├── xmlregexp.h
+│   │   │       ├── xmlsave.h
+│   │   │       ├── xmlschemas.h
+│   │   │       ├── xmlschemastypes.h
+│   │   │       ├── xmlstring.h
+│   │   │       ├── xmlunicode.h
+│   │   │       ├── xmlversion.h
+│   │   │       ├── xmlwriter.h
+│   │   │       ├── xpath.h
+│   │   │       ├── xpathInternals.h
+│   │   │       └── xpointer.h
+│   │   ├── mbedtls
+│   │   │   ├── aes.h
+│   │   │   ├── aria.h
+│   │   │   ├── asn1.h
+│   │   │   ├── asn1write.h
+│   │   │   ├── base64.h
+│   │   │   ├── bignum.h
+│   │   │   ├── block_cipher.h
+│   │   │   ├── build_info.h
+│   │   │   ├── camellia.h
+│   │   │   ├── ccm.h
+│   │   │   ├── chacha20.h
+│   │   │   ├── chachapoly.h
+│   │   │   ├── check_config.h
+│   │   │   ├── cipher.h
+│   │   │   ├── cmac.h
+│   │   │   ├── compat-2.x.h
+│   │   │   ├── config_adjust_legacy_crypto.h
+│   │   │   ├── config_adjust_legacy_from_psa.h
+│   │   │   ├── config_adjust_psa_from_legacy.h
+│   │   │   ├── config_adjust_psa_superset_legacy.h
+│   │   │   ├── config_adjust_ssl.h
+│   │   │   ├── config_adjust_x509.h
+│   │   │   ├── config_psa.h
+│   │   │   ├── constant_time.h
+│   │   │   ├── ctr_drbg.h
+│   │   │   ├── debug.h
+│   │   │   ├── des.h
+│   │   │   ├── dhm.h
+│   │   │   ├── ecdh.h
+│   │   │   ├── ecdsa.h
+│   │   │   ├── ecjpake.h
+│   │   │   ├── ecp.h
+│   │   │   ├── entropy.h
+│   │   │   ├── error.h
+│   │   │   ├── gcm.h
+│   │   │   ├── hkdf.h
+│   │   │   ├── hmac_drbg.h
+│   │   │   ├── lms.h
+│   │   │   ├── mbedtls_config.h
+│   │   │   ├── md.h
+│   │   │   ├── md5.h
+│   │   │   ├── memory_buffer_alloc.h
+│   │   │   ├── net_sockets.h
+│   │   │   ├── nist_kw.h
+│   │   │   ├── oid.h
+│   │   │   ├── pem.h
+│   │   │   ├── pk.h
+│   │   │   ├── pkcs12.h
+│   │   │   ├── pkcs5.h
+│   │   │   ├── pkcs7.h
+│   │   │   ├── platform.h
+│   │   │   ├── platform_time.h
+│   │   │   ├── platform_util.h
+│   │   │   ├── poly1305.h
+│   │   │   ├── private_access.h
+│   │   │   ├── psa_util.h
+│   │   │   ├── ripemd160.h
+│   │   │   ├── rsa.h
+│   │   │   ├── sha1.h
+│   │   │   ├── sha256.h
+│   │   │   ├── sha3.h
+│   │   │   ├── sha512.h
+│   │   │   ├── ssl.h
+│   │   │   ├── ssl_cache.h
+│   │   │   ├── ssl_ciphersuites.h
+│   │   │   ├── ssl_cookie.h
+│   │   │   ├── ssl_ticket.h
+│   │   │   ├── threading.h
+│   │   │   ├── timing.h
+│   │   │   ├── version.h
+│   │   │   ├── x509.h
+│   │   │   ├── x509_crl.h
+│   │   │   ├── x509_crt.h
+│   │   │   └── x509_csr.h
+│   │   ├── mpv
+│   │   │   ├── client.h
+│   │   │   ├── render.h
+│   │   │   ├── render_gl.h
+│   │   │   └── stream_cb.h
+│   │   ├── opus
+│   │   │   ├── opus.h
+│   │   │   ├── opus_defines.h
+│   │   │   ├── opus_multistream.h
+│   │   │   ├── opus_projection.h
+│   │   │   └── opus_types.h
+│   │   ├── psa
+│   │   │   ├── build_info.h
+│   │   │   ├── crypto.h
+│   │   │   ├── crypto_adjust_auto_enabled.h
+│   │   │   ├── crypto_adjust_config_dependencies.h
+│   │   │   ├── crypto_adjust_config_key_pair_types.h
+│   │   │   ├── crypto_adjust_config_synonyms.h
+│   │   │   ├── crypto_builtin_composites.h
+│   │   │   ├── crypto_builtin_key_derivation.h
+│   │   │   ├── crypto_builtin_primitives.h
+│   │   │   ├── crypto_compat.h
+│   │   │   ├── crypto_config.h
+│   │   │   ├── crypto_driver_common.h
+│   │   │   ├── crypto_driver_contexts_composites.h
+│   │   │   ├── crypto_driver_contexts_key_derivation.h
+│   │   │   ├── crypto_driver_contexts_primitives.h
+│   │   │   ├── crypto_extra.h
+│   │   │   ├── crypto_legacy.h
+│   │   │   ├── crypto_platform.h
+│   │   │   ├── crypto_se_driver.h
+│   │   │   ├── crypto_sizes.h
+│   │   │   ├── crypto_struct.h
+│   │   │   ├── crypto_types.h
+│   │   │   └── crypto_values.h
+│   │   ├── speex
+│   │   │   ├── speex.h
+│   │   │   ├── speex_bits.h
+│   │   │   ├── speex_callbacks.h
+│   │   │   ├── speex_config_types.h
+│   │   │   ├── speex_header.h
+│   │   │   ├── speex_stereo.h
+│   │   │   └── speex_types.h
+│   │   ├── twolame.h
+│   │   ├── vpx
+│   │   │   ├── vp8.h
+│   │   │   ├── vp8cx.h
+│   │   │   ├── vp8dx.h
+│   │   │   ├── vpx_codec.h
+│   │   │   ├── vpx_decoder.h
+│   │   │   ├── vpx_encoder.h
+│   │   │   ├── vpx_ext_ratectrl.h
+│   │   │   ├── vpx_frame_buffer.h
+│   │   │   ├── vpx_image.h
+│   │   │   ├── vpx_integer.h
+│   │   │   └── vpx_tpl.h
+│   │   ├── webp
+│   │   │   ├── decode.h
+│   │   │   ├── demux.h
+│   │   │   ├── encode.h
+│   │   │   ├── mux.h
+│   │   │   ├── mux_types.h
+│   │   │   ├── sharpyuv
+│   │   │   │   ├── sharpyuv.h
+│   │   │   │   └── sharpyuv_csp.h
+│   │   │   └── types.h
+│   │   ├── x264.h
+│   │   ├── x264_config.h
+│   │   ├── x265.h
+│   │   └── x265_config.h
+│   └── armeabi-v7a
+│       ├── aom
+│       │   ├── aom.h
+│       │   ├── aom_codec.h
+│       │   ├── aom_decoder.h
+│       │   ├── aom_encoder.h
+│       │   ├── aom_ext_ratectrl.h
+│       │   ├── aom_external_partition.h
+│       │   ├── aom_frame_buffer.h
+│       │   ├── aom_image.h
+│       │   ├── aom_integer.h
+│       │   ├── aom_tpl.h
+│       │   ├── aomcx.h
+│       │   └── aomdx.h
+│       ├── ass
+│       │   ├── ass.h
+│       │   └── ass_types.h
+│       ├── dav1d
+│       │   ├── common.h
+│       │   ├── data.h
+│       │   ├── dav1d.h
+│       │   ├── headers.h
+│       │   ├── picture.h
+│       │   └── version.h
+│       ├── everest
+│       │   ├── Hacl_Curve25519.h
+│       │   ├── everest.h
+│       │   ├── kremlib
+│       │   │   ├── FStar_UInt128.h
+│       │   │   └── FStar_UInt64_FStar_UInt32_FStar_UInt16_FStar_UInt8.h
+│       │   ├── kremlib.h
+│       │   ├── kremlin
+│       │   │   ├── c_endianness.h
+│       │   │   └── internal
+│       │   │       ├── builtin.h
+│       │   │       ├── callconv.h
+│       │   │       ├── compat.h
+│       │   │       ├── debug.h
+│       │   │       ├── target.h
+│       │   │       ├── types.h
+│       │   │       └── wasmsupport.h
+│       │   ├── vs2013
+│       │   │   └── Hacl_Curve25519.h
+│       │   └── x25519.h
+│       ├── freetype2
+│       │   ├── freetype
+│       │   │   ├── config
+│       │   │   │   ├── ftconfig.h
+│       │   │   │   ├── ftheader.h
+│       │   │   │   ├── ftmodule.h
+│       │   │   │   ├── ftoption.h
+│       │   │   │   ├── ftstdlib.h
+│       │   │   │   ├── integer-types.h
+│       │   │   │   ├── mac-support.h
+│       │   │   │   └── public-macros.h
+│       │   │   ├── freetype.h
+│       │   │   ├── ftadvanc.h
+│       │   │   ├── ftbbox.h
+│       │   │   ├── ftbdf.h
+│       │   │   ├── ftbitmap.h
+│       │   │   ├── ftbzip2.h
+│       │   │   ├── ftcache.h
+│       │   │   ├── ftchapters.h
+│       │   │   ├── ftcid.h
+│       │   │   ├── ftcolor.h
+│       │   │   ├── ftdriver.h
+│       │   │   ├── fterrdef.h
+│       │   │   ├── fterrors.h
+│       │   │   ├── ftfntfmt.h
+│       │   │   ├── ftgasp.h
+│       │   │   ├── ftglyph.h
+│       │   │   ├── ftgxval.h
+│       │   │   ├── ftgzip.h
+│       │   │   ├── ftimage.h
+│       │   │   ├── ftincrem.h
+│       │   │   ├── ftlcdfil.h
+│       │   │   ├── ftlist.h
+│       │   │   ├── ftlogging.h
+│       │   │   ├── ftlzw.h
+│       │   │   ├── ftmac.h
+│       │   │   ├── ftmm.h
+│       │   │   ├── ftmodapi.h
+│       │   │   ├── ftmoderr.h
+│       │   │   ├── ftotval.h
+│       │   │   ├── ftoutln.h
+│       │   │   ├── ftparams.h
+│       │   │   ├── ftpfr.h
+│       │   │   ├── ftrender.h
+│       │   │   ├── ftsizes.h
+│       │   │   ├── ftsnames.h
+│       │   │   ├── ftstroke.h
+│       │   │   ├── ftsynth.h
+│       │   │   ├── ftsystem.h
+│       │   │   ├── fttrigon.h
+│       │   │   ├── fttypes.h
+│       │   │   ├── ftwinfnt.h
+│       │   │   ├── otsvg.h
+│       │   │   ├── t1tables.h
+│       │   │   ├── ttnameid.h
+│       │   │   ├── tttables.h
+│       │   │   └── tttags.h
+│       │   └── ft2build.h
+│       ├── fribidi
+│       │   ├── fribidi-arabic.h
+│       │   ├── fribidi-begindecls.h
+│       │   ├── fribidi-bidi-types-list.h
+│       │   ├── fribidi-bidi-types.h
+│       │   ├── fribidi-bidi.h
+│       │   ├── fribidi-brackets.h
+│       │   ├── fribidi-char-sets-list.h
+│       │   ├── fribidi-char-sets.h
+│       │   ├── fribidi-common.h
+│       │   ├── fribidi-config.h
+│       │   ├── fribidi-deprecated.h
+│       │   ├── fribidi-enddecls.h
+│       │   ├── fribidi-flags.h
+│       │   ├── fribidi-joining-types-list.h
+│       │   ├── fribidi-joining-types.h
+│       │   ├── fribidi-joining.h
+│       │   ├── fribidi-mirroring.h
+│       │   ├── fribidi-shape.h
+│       │   ├── fribidi-types.h
+│       │   ├── fribidi-unicode-version.h
+│       │   ├── fribidi-unicode.h
+│       │   └── fribidi.h
+│       ├── lame
+│       │   └── lame.h
+│       ├── libavcodec
+│       │   ├── ac3_parser.h
+│       │   ├── adts_parser.h
+│       │   ├── avcodec.h
+│       │   ├── avdct.h
+│       │   ├── bsf.h
+│       │   ├── codec.h
+│       │   ├── codec_desc.h
+│       │   ├── codec_id.h
+│       │   ├── codec_par.h
+│       │   ├── d3d11va.h
+│       │   ├── defs.h
+│       │   ├── dirac.h
+│       │   ├── dv_profile.h
+│       │   ├── dxva2.h
+│       │   ├── exif.h
+│       │   ├── jni.h
+│       │   ├── mediacodec.h
+│       │   ├── packet.h
+│       │   ├── qsv.h
+│       │   ├── smpte_436m.h
+│       │   ├── vdpau.h
+│       │   ├── version.h
+│       │   ├── version_major.h
+│       │   ├── videotoolbox.h
+│       │   └── vorbis_parser.h
+│       ├── libavdevice
+│       │   ├── avdevice.h
+│       │   ├── version.h
+│       │   └── version_major.h
+│       ├── libavfilter
+│       │   ├── avfilter.h
+│       │   ├── buffersink.h
+│       │   ├── buffersrc.h
+│       │   ├── version.h
+│       │   └── version_major.h
+│       ├── libavformat
+│       │   ├── avformat.h
+│       │   ├── avio.h
+│       │   ├── version.h
+│       │   └── version_major.h
+│       ├── libavutil
+│       │   ├── adler32.h
+│       │   ├── aes.h
+│       │   ├── aes_ctr.h
+│       │   ├── ambient_viewing_environment.h
+│       │   ├── attributes.h
+│       │   ├── audio_fifo.h
+│       │   ├── avassert.h
+│       │   ├── avconfig.h
+│       │   ├── avstring.h
+│       │   ├── avutil.h
+│       │   ├── base64.h
+│       │   ├── blowfish.h
+│       │   ├── bprint.h
+│       │   ├── bswap.h
+│       │   ├── buffer.h
+│       │   ├── camellia.h
+│       │   ├── cast5.h
+│       │   ├── channel_layout.h
+│       │   ├── common.h
+│       │   ├── container_fifo.h
+│       │   ├── cpu.h
+│       │   ├── crc.h
+│       │   ├── csp.h
+│       │   ├── des.h
+│       │   ├── detection_bbox.h
+│       │   ├── dict.h
+│       │   ├── display.h
+│       │   ├── dovi_meta.h
+│       │   ├── downmix_info.h
+│       │   ├── encryption_info.h
+│       │   ├── error.h
+│       │   ├── eval.h
+│       │   ├── executor.h
+│       │   ├── ffversion.h
+│       │   ├── fifo.h
+│       │   ├── file.h
+│       │   ├── film_grain_params.h
+│       │   ├── frame.h
+│       │   ├── hash.h
+│       │   ├── hdr_dynamic_metadata.h
+│       │   ├── hdr_dynamic_vivid_metadata.h
+│       │   ├── hmac.h
+│       │   ├── hwcontext.h
+│       │   ├── hwcontext_amf.h
+│       │   ├── hwcontext_cuda.h
+│       │   ├── hwcontext_d3d11va.h
+│       │   ├── hwcontext_d3d12va.h
+│       │   ├── hwcontext_drm.h
+│       │   ├── hwcontext_dxva2.h
+│       │   ├── hwcontext_mediacodec.h
+│       │   ├── hwcontext_oh.h
+│       │   ├── hwcontext_opencl.h
+│       │   ├── hwcontext_qsv.h
+│       │   ├── hwcontext_vaapi.h
+│       │   ├── hwcontext_vdpau.h
+│       │   ├── hwcontext_videotoolbox.h
+│       │   ├── hwcontext_vulkan.h
+│       │   ├── iamf.h
+│       │   ├── imgutils.h
+│       │   ├── intfloat.h
+│       │   ├── intreadwrite.h
+│       │   ├── lfg.h
+│       │   ├── log.h
+│       │   ├── lzo.h
+│       │   ├── macros.h
+│       │   ├── mastering_display_metadata.h
+│       │   ├── mathematics.h
+│       │   ├── md5.h
+│       │   ├── mem.h
+│       │   ├── motion_vector.h
+│       │   ├── murmur3.h
+│       │   ├── opt.h
+│       │   ├── parseutils.h
+│       │   ├── pixdesc.h
+│       │   ├── pixelutils.h
+│       │   ├── pixfmt.h
+│       │   ├── random_seed.h
+│       │   ├── rational.h
+│       │   ├── rc4.h
+│       │   ├── refstruct.h
+│       │   ├── replaygain.h
+│       │   ├── ripemd.h
+│       │   ├── samplefmt.h
+│       │   ├── sha.h
+│       │   ├── sha512.h
+│       │   ├── spherical.h
+│       │   ├── stereo3d.h
+│       │   ├── tdrdi.h
+│       │   ├── tea.h
+│       │   ├── threadmessage.h
+│       │   ├── time.h
+│       │   ├── timecode.h
+│       │   ├── timestamp.h
+│       │   ├── tree.h
+│       │   ├── twofish.h
+│       │   ├── tx.h
+│       │   ├── uuid.h
+│       │   ├── version.h
+│       │   ├── video_enc_params.h
+│       │   ├── video_hint.h
+│       │   └── xtea.h
+│       ├── libbluray
+│       │   ├── bluray-version.h
+│       │   ├── bluray.h
+│       │   ├── clpi_data.h
+│       │   ├── filesystem.h
+│       │   ├── keys.h
+│       │   ├── log_control.h
+│       │   ├── meta_data.h
+│       │   ├── overlay.h
+│       │   └── player_settings.h
+│       ├── libplacebo
+│       │   ├── cache.h
+│       │   ├── colorspace.h
+│       │   ├── common.h
+│       │   ├── config.h
+│       │   ├── d3d11.h
+│       │   ├── dispatch.h
+│       │   ├── dither.h
+│       │   ├── dummy.h
+│       │   ├── filters.h
+│       │   ├── gamut_mapping.h
+│       │   ├── gpu.h
+│       │   ├── log.h
+│       │   ├── opengl.h
+│       │   ├── options.h
+│       │   ├── renderer.h
+│       │   ├── shaders
+│       │   │   ├── colorspace.h
+│       │   │   ├── custom.h
+│       │   │   ├── deinterlacing.h
+│       │   │   ├── dithering.h
+│       │   │   ├── film_grain.h
+│       │   │   ├── icc.h
+│       │   │   ├── lut.h
+│       │   │   └── sampling.h
+│       │   ├── shaders.h
+│       │   ├── swapchain.h
+│       │   ├── tone_mapping.h
+│       │   ├── utils
+│       │   │   ├── dav1d.h
+│       │   │   ├── dav1d_internal.h
+│       │   │   ├── dolbyvision.h
+│       │   │   ├── frame_queue.h
+│       │   │   ├── libav.h
+│       │   │   ├── libav_internal.h
+│       │   │   └── upload.h
+│       │   └── vulkan.h
+│       ├── libswresample
+│       │   ├── swresample.h
+│       │   ├── version.h
+│       │   └── version_major.h
+│       ├── libswscale
+│       │   ├── swscale.h
+│       │   ├── version.h
+│       │   └── version_major.h
+│       ├── libxml2
+│       │   └── libxml
+│       │       ├── HTMLparser.h
+│       │       ├── HTMLtree.h
+│       │       ├── SAX.h
+│       │       ├── SAX2.h
+│       │       ├── c14n.h
+│       │       ├── catalog.h
+│       │       ├── chvalid.h
+│       │       ├── debugXML.h
+│       │       ├── dict.h
+│       │       ├── encoding.h
+│       │       ├── entities.h
+│       │       ├── globals.h
+│       │       ├── hash.h
+│       │       ├── list.h
+│       │       ├── nanoftp.h
+│       │       ├── nanohttp.h
+│       │       ├── parser.h
+│       │       ├── parserInternals.h
+│       │       ├── pattern.h
+│       │       ├── relaxng.h
+│       │       ├── schemasInternals.h
+│       │       ├── schematron.h
+│       │       ├── threads.h
+│       │       ├── tree.h
+│       │       ├── uri.h
+│       │       ├── valid.h
+│       │       ├── xinclude.h
+│       │       ├── xlink.h
+│       │       ├── xmlIO.h
+│       │       ├── xmlautomata.h
+│       │       ├── xmlerror.h
+│       │       ├── xmlexports.h
+│       │       ├── xmlmemory.h
+│       │       ├── xmlmodule.h
+│       │       ├── xmlreader.h
+│       │       ├── xmlregexp.h
+│       │       ├── xmlsave.h
+│       │       ├── xmlschemas.h
+│       │       ├── xmlschemastypes.h
+│       │       ├── xmlstring.h
+│       │       ├── xmlunicode.h
+│       │       ├── xmlversion.h
+│       │       ├── xmlwriter.h
+│       │       ├── xpath.h
+│       │       ├── xpathInternals.h
+│       │       └── xpointer.h
+│       ├── mbedtls
+│       │   ├── aes.h
+│       │   ├── aria.h
+│       │   ├── asn1.h
+│       │   ├── asn1write.h
+│       │   ├── base64.h
+│       │   ├── bignum.h
+│       │   ├── block_cipher.h
+│       │   ├── build_info.h
+│       │   ├── camellia.h
+│       │   ├── ccm.h
+│       │   ├── chacha20.h
+│       │   ├── chachapoly.h
+│       │   ├── check_config.h
+│       │   ├── cipher.h
+│       │   ├── cmac.h
+│       │   ├── compat-2.x.h
+│       │   ├── config_adjust_legacy_crypto.h
+│       │   ├── config_adjust_legacy_from_psa.h
+│       │   ├── config_adjust_psa_from_legacy.h
+│       │   ├── config_adjust_psa_superset_legacy.h
+│       │   ├── config_adjust_ssl.h
+│       │   ├── config_adjust_x509.h
+│       │   ├── config_psa.h
+│       │   ├── constant_time.h
+│       │   ├── ctr_drbg.h
+│       │   ├── debug.h
+│       │   ├── des.h
+│       │   ├── dhm.h
+│       │   ├── ecdh.h
+│       │   ├── ecdsa.h
+│       │   ├── ecjpake.h
+│       │   ├── ecp.h
+│       │   ├── entropy.h
+│       │   ├── error.h
+│       │   ├── gcm.h
+│       │   ├── hkdf.h
+│       │   ├── hmac_drbg.h
+│       │   ├── lms.h
+│       │   ├── mbedtls_config.h
+│       │   ├── md.h
+│       │   ├── md5.h
+│       │   ├── memory_buffer_alloc.h
+│       │   ├── net_sockets.h
+│       │   ├── nist_kw.h
+│       │   ├── oid.h
+│       │   ├── pem.h
+│       │   ├── pk.h
+│       │   ├── pkcs12.h
+│       │   ├── pkcs5.h
+│       │   ├── pkcs7.h
+│       │   ├── platform.h
+│       │   ├── platform_time.h
+│       │   ├── platform_util.h
+│       │   ├── poly1305.h
+│       │   ├── private_access.h
+│       │   ├── psa_util.h
+│       │   ├── ripemd160.h
+│       │   ├── rsa.h
+│       │   ├── sha1.h
+│       │   ├── sha256.h
+│       │   ├── sha3.h
+│       │   ├── sha512.h
+│       │   ├── ssl.h
+│       │   ├── ssl_cache.h
+│       │   ├── ssl_ciphersuites.h
+│       │   ├── ssl_cookie.h
+│       │   ├── ssl_ticket.h
+│       │   ├── threading.h
+│       │   ├── timing.h
+│       │   ├── version.h
+│       │   ├── x509.h
+│       │   ├── x509_crl.h
+│       │   ├── x509_crt.h
+│       │   └── x509_csr.h
+│       ├── mpv
+│       │   ├── client.h
+│       │   ├── render.h
+│       │   ├── render_gl.h
+│       │   └── stream_cb.h
+│       ├── opus
+│       │   ├── opus.h
+│       │   ├── opus_defines.h
+│       │   ├── opus_multistream.h
+│       │   ├── opus_projection.h
+│       │   └── opus_types.h
+│       ├── psa
+│       │   ├── build_info.h
+│       │   ├── crypto.h
+│       │   ├── crypto_adjust_auto_enabled.h
+│       │   ├── crypto_adjust_config_dependencies.h
+│       │   ├── crypto_adjust_config_key_pair_types.h
+│       │   ├── crypto_adjust_config_synonyms.h
+│       │   ├── crypto_builtin_composites.h
+│       │   ├── crypto_builtin_key_derivation.h
+│       │   ├── crypto_builtin_primitives.h
+│       │   ├── crypto_compat.h
+│       │   ├── crypto_config.h
+│       │   ├── crypto_driver_common.h
+│       │   ├── crypto_driver_contexts_composites.h
+│       │   ├── crypto_driver_contexts_key_derivation.h
+│       │   ├── crypto_driver_contexts_primitives.h
+│       │   ├── crypto_extra.h
+│       │   ├── crypto_legacy.h
+│       │   ├── crypto_platform.h
+│       │   ├── crypto_se_driver.h
+│       │   ├── crypto_sizes.h
+│       │   ├── crypto_struct.h
+│       │   ├── crypto_types.h
+│       │   └── crypto_values.h
+│       ├── speex
+│       │   ├── speex.h
+│       │   ├── speex_bits.h
+│       │   ├── speex_callbacks.h
+│       │   ├── speex_config_types.h
+│       │   ├── speex_header.h
+│       │   ├── speex_stereo.h
+│       │   └── speex_types.h
+│       ├── twolame.h
+│       ├── vpx
+│       │   ├── vp8.h
+│       │   ├── vp8cx.h
+│       │   ├── vp8dx.h
+│       │   ├── vpx_codec.h
+│       │   ├── vpx_decoder.h
+│       │   ├── vpx_encoder.h
+│       │   ├── vpx_ext_ratectrl.h
+│       │   ├── vpx_frame_buffer.h
+│       │   ├── vpx_image.h
+│       │   ├── vpx_integer.h
+│       │   └── vpx_tpl.h
+│       ├── webp
+│       │   ├── decode.h
+│       │   ├── demux.h
+│       │   ├── encode.h
+│       │   ├── mux.h
+│       │   ├── mux_types.h
+│       │   ├── sharpyuv
+│       │   │   ├── sharpyuv.h
+│       │   │   └── sharpyuv_csp.h
+│       │   └── types.h
+│       ├── x264.h
+│       ├── x264_config.h
+│       ├── x265.h
+│       └── x265_config.h
+└── lib
+    ├── arm64-v8a
+    │   ├── libavcodec.so
+    │   ├── libavdevice.so
+    │   ├── libavfilter.so
+    │   ├── libavformat.so
+    │   ├── libavutil.so
+    │   ├── libbase.so
+    │   ├── libmpv.so
+    │   ├── libplacebo.so
+    │   ├── libswresample.so
+    │   ├── libswscale.so
+    │   └── pkgconfig
+    │       ├── aom.pc
+    │       ├── dav1d.pc
+    │       ├── freetype2.pc
+    │       ├── fribidi.pc
+    │       ├── libass.pc
+    │       ├── libavcodec.pc
+    │       ├── libavdevice.pc
+    │       ├── libavfilter.pc
+    │       ├── libavformat.pc
+    │       ├── libavutil.pc
+    │       ├── libbluray.pc
+    │       ├── libplacebo.pc
+    │       ├── libsharpyuv.pc
+    │       ├── libswresample.pc
+    │       ├── libswscale.pc
+    │       ├── libwebp.pc
+    │       ├── libwebpdemux.pc
+    │       ├── libwebpmux.pc
+    │       ├── libxml-2.0.pc
+    │       ├── mbedcrypto.pc
+    │       ├── mbedtls.pc
+    │       ├── mbedx509.pc
+    │       ├── mpv.pc
+    │       ├── opus.pc
+    │       ├── speex.pc
+    │       ├── twolame.pc
+    │       ├── vpx.pc
+    │       ├── x264.pc
+    │       └── x265.pc
+    └── armeabi-v7a
+        ├── libavcodec.so
+        ├── libavdevice.so
+        ├── libavfilter.so
+        ├── libavformat.so
+        ├── libavutil.so
+        ├── libbase.so
+        ├── libmpv.so
+        ├── libplacebo.so
+        ├── libswresample.so
+        ├── libswscale.so
+        └── pkgconfig
+            ├── aom.pc
+            ├── dav1d.pc
+            ├── freetype2.pc
+            ├── fribidi.pc
+            ├── libass.pc
+            ├── libavcodec.pc
+            ├── libavdevice.pc
+            ├── libavfilter.pc
+            ├── libavformat.pc
+            ├── libavutil.pc
+            ├── libbluray.pc
+            ├── libplacebo.pc
+            ├── libsharpyuv.pc
+            ├── libswresample.pc
+            ├── libswscale.pc
+            ├── libwebp.pc
+            ├── libwebpdemux.pc
+            ├── libwebpmux.pc
+            ├── libxml-2.0.pc
+            ├── mbedcrypto.pc
+            ├── mbedtls.pc
+            ├── mbedx509.pc
+            ├── mpv.pc
+            ├── opus.pc
+            ├── speex.pc
+            ├── twolame.pc
+            ├── vpx.pc
+            ├── x264.pc
+            └── x265.pc
+            
+            
+            
+            
+ so by you this pc fiels are useless in apk l,so I want you to make chahge and not incloude the pkgconfig fodoer in the final zip,and as you can see ki libs mai libmov.so and libbase.so ese 2 fiels ban rhe hai dono fiels same hi h to libmpv.so file mai ana chaiye sahi se fix karo. Andfianl tum dkeh lo sare fiels ka name wagira and mujhe btaoo last m ki hamare ffmpge ke sare ke sare pkgs compile ho gaye h na re brooo isme re broo btaoo yaar.
+ 
+ 
+ so ye chahge karo and ek baar khud se compiek karke check kaor hoag gy than mujhe btana

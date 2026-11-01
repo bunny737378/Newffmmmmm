@@ -42,10 +42,12 @@ export PKG_CONFIG_LIBDIR="${FFMPEG_PREFIX}/lib/pkgconfig:${EXTERNAL_PREFIX}/lib/
 
 unset CC CXX
 
+CORE_LIB_FLAG="-Dlibmpv=true"
+
 ${MESON_EXECUTABLE} setup ${BUILD_DIRECTORY} \
   --cross-file ${CROSS_FILE_NAME} \
   --default-library shared \
-  -Dlibmpv=true \
+  ${CORE_LIB_FLAG} \
   -Dcplayer=false \
   -Dbuild-date=false \
   -Diconv=disabled \
@@ -75,22 +77,24 @@ ${NINJA_EXECUTABLE} install
 
 mkdir -p "${INSTALL_DIR}/lib"
 
-MPV_SO_FOUND=""
-if [ -f "${INSTALL_DIR}/lib/libmpv.so" ]; then
-  MPV_SO_FOUND="${INSTALL_DIR}/lib/libmpv.so"
-elif [ -f "${INSTALL_DIR}/lib64/libmpv.so" ]; then
-  MPV_SO_FOUND="${INSTALL_DIR}/lib64/libmpv.so"
-elif [ -f "libmpv.so" ]; then
-  MPV_SO_FOUND="libmpv.so"
+SNORA_SO_FOUND=""
+if [ -f "${INSTALL_DIR}/lib/libsnora.so" ]; then
+  SNORA_SO_FOUND="${INSTALL_DIR}/lib/libsnora.so"
 else
-  MPV_SO_FOUND=$(find . "${INSTALL_DIR}" -name "libmpv.so*" 2>/dev/null | head -n 1)
+  SNORA_SO_FOUND=$(find "${INSTALL_DIR}" build . -type f -name "*.so" 2>/dev/null | grep -v "avcodec\|avformat\|avutil\|swresample\|swscale\|avfilter\|avdevice\|placebo" | head -n 1)
 fi
 
-if [ -n "${MPV_SO_FOUND}" ]; then
-  cp -f "${MPV_SO_FOUND}" "${INSTALL_DIR}/lib/libmpv.so"
-  cp -f "${MPV_SO_FOUND}" "${INSTALL_DIR}/lib/libbase.so"
-  echo "==> Successfully compiled mpv and created libbase.so for ${ANDROID_ABI} from ${MPV_SO_FOUND}!"
+if [ -n "${SNORA_SO_FOUND}" ]; then
+  cp -f "${SNORA_SO_FOUND}" "${INSTALL_DIR}/lib/libsnora.so"
+  find "${INSTALL_DIR}/lib" -maxdepth 1 -name "*.so" ! -name "libsnora.so" ! -name "libplacebo.so" ! -name "libav*.so" ! -name "libsw*.so" -delete 2>/dev/null || true
+  rm -rf "${INSTALL_DIR}/lib/pkgconfig"
+  if [ -d "${INSTALL_DIR}/include/mpv" ]; then
+    mkdir -p "${INSTALL_DIR}/include/snora"
+    cp -r "${INSTALL_DIR}/include/mpv/." "${INSTALL_DIR}/include/snora/"
+    rm -rf "${INSTALL_DIR}/include/mpv"
+  fi
+  echo "==> Successfully compiled and installed libsnora.so for ${ANDROID_ABI} from ${SNORA_SO_FOUND}!"
 else
-  echo "ERROR: libmpv.so build failed or not found!"
+  echo "ERROR: libsnora.so build failed or output library not found!"
   exit 1
 fi

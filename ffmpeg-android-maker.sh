@@ -17,18 +17,12 @@ function prepareOutput() {
   mkdir -p ${OUTPUT_LIB}
   if [ -d "${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/lib" ]; then
     cp -a ${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/lib/*.so ${OUTPUT_LIB} 2>/dev/null || true
-    if [ -d "${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/lib/pkgconfig" ]; then
-      mkdir -p ${OUTPUT_LIB}/pkgconfig
-      cp -r ${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/lib/pkgconfig/* ${OUTPUT_LIB}/pkgconfig/ 2>/dev/null || true
-    fi
   fi
   if [ -d "${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/lib" ]; then
     cp -a ${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/lib/*.so ${OUTPUT_LIB} 2>/dev/null || true
-    if [ -d "${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/lib/pkgconfig" ]; then
-      mkdir -p ${OUTPUT_LIB}/pkgconfig
-      cp -r ${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/lib/pkgconfig/* ${OUTPUT_LIB}/pkgconfig/ 2>/dev/null || true
-    fi
   fi
+  rm -rf ${OUTPUT_LIB}/pkgconfig 2>/dev/null || true
+  rm -f ${OUTPUT_LIB}/libbase.so 2>/dev/null || true
 
   OUTPUT_HEADERS=${OUTPUT_DIR}/include/${ANDROID_ABI}
   mkdir -p ${OUTPUT_HEADERS}
@@ -37,6 +31,11 @@ function prepareOutput() {
   fi
   if [ -d "${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/include" ]; then
     cp -r ${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/include/* ${OUTPUT_HEADERS} 2>/dev/null || true
+  fi
+  if [ -d "${OUTPUT_HEADERS}/mpv" ]; then
+    mkdir -p "${OUTPUT_HEADERS}/snora"
+    cp -r "${OUTPUT_HEADERS}/mpv/." "${OUTPUT_HEADERS}/snora/"
+    rm -rf "${OUTPUT_HEADERS}/mpv"
   fi
 
   if [ -d "${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/bin" ]; then
@@ -62,7 +61,6 @@ source ${SCRIPTS_DIR}/parse-arguments.sh
 
 if [ "$USE_PREBUILT_FFMPEG" = true ]; then
   echo "==> Using prebuilt FFmpeg. Skipping FFmpeg compilation."
-  rm -rf ${BUILD_DIR_EXTERNAL}
   rm -rf ${STATS_DIR}
   rm -rf ${OUTPUT_DIR}
 else
@@ -80,18 +78,18 @@ if [ "$USE_PREBUILT_FFMPEG" = true ]; then
   done
 else
   BEFORE_FFMPEG=()
-  HAS_MPV=false
+  HAS_SNORA=false
   for lib in "${EXTERNAL_LIBRARIES[@]}"; do
-    if [ "$lib" == "mpv" ]; then
-      HAS_MPV=true
+    if [ "$lib" == "snora" ]; then
+      HAS_SNORA=true
     else
       BEFORE_FFMPEG+=("$lib")
     fi
   done
 
   COMPONENTS_TO_BUILD=("${BEFORE_FFMPEG[@]}" "ffmpeg")
-  if [ "$HAS_MPV" = true ]; then
-    COMPONENTS_TO_BUILD+=("mpv")
+  if [ "$HAS_SNORA" = true ]; then
+    COMPONENTS_TO_BUILD+=("snora")
   fi
 fi
 
